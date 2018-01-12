@@ -1,0 +1,61 @@
+<!doctype html>
+<html ng-app="todoApp">
+  <head>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.7/angular.min.js"></script>
+	<script src="main.js"></script>
+	<style>
+	    .cls_green{
+		   background-color:#6fe069
+		}
+	    
+		.cls_red{
+		   background-color:#e07669
+		}
+	</style>
+  </head>
+  <body>
+    <h2>HDFC Credit Card Application Status</h2>
+    <div ng-controller="TodoListController as todoList">
+		<table  border="1"  style="border-collapse:collapse"  width="70%"   >
+		   <tr>
+		       <th width="50%" >Application #</th>
+		       <th width="50%" >Applicant Mobile #</th>
+		   </tr>
+		   <tr>
+		       <td width="50%" >
+				  <textarea style="width:100%;height:250px" ng-model="todoList.model.applicationNos" ></textarea>
+			   </td>
+		       <td width="50%" >
+				  <textarea style="width:100%;height:250px" ng-model="todoList.model.applicantMob" ></textarea>
+			   </td>
+		   </tr>
+		   <tr>
+		       <td colspan="2" >
+				   <input type="button" value="Get Details"  ng-click="todoList.getAppDetail()"  />
+			   </td>
+		   </tr>
+		</table>
+		<div style="margin-top:20px;margin-bottom:20px" >
+		   <input type="text" ng-model="todoList.model.searchText"  placeholder="Search Here" />
+		</div>
+		<table  border="1"  style="border-collapse:collapse"  width="70%"   >
+		   <tr>
+		       <th width="10%" >SL. # </th>
+		       <th width="20%" >Application # </th>
+		       <th width="20%" >Mobile # </th>
+		       <th width="20%" >Record Status </th>
+		       <th width="15%" >Refference #</th>
+		       <th width="15%" >Credit card status</th>
+		   </tr>
+		   <tr ng-repeat="record in todoList.model.responseList | filter:todoList.model.searchText"  ng-class="{'cls_green' : record.status.indexOf('Despatch') != -1,  'cls_red' : record.status.indexOf('Despatch') == -1}"  >
+			   <td>{{$index+1}}</td>
+			   <td>{{record.applicationNo}}</td>
+			   <td>{{record.mobileNo}}</td>
+			   <td>{{record.statusMsg}}</td>
+			   <td>{{record.refNo}}</td>
+			   <td>{{record.status}}</td>
+		   </tr>
+		</table>
+    </div>
+  </body>
+</html>
